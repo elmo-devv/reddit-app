@@ -13,7 +13,7 @@ export class User extends BaseEntity{
   @Index()
   @Length(3, 32, {message: "사용자 이름은 3자 이상이여야 합니다."})
   @Column()
-  username: string;
+  userName: string;
 
   @Column()
   @Length(6, 255, {message: "비밀번호는 6자리 이상이어야 합니다."})
