@@ -1,10 +1,11 @@
 import {BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany} from "typeorm";
 import {User} from './User';
 import {Expose} from 'class-transformer';
+import Post from './Post';
 
 @Entity("sub")
 export default class Sub extends BaseEntity {
-  @Index
+  @Index()
   @Column({ unique: true })
   name: string;
 
@@ -37,7 +38,7 @@ export default class Sub extends BaseEntity {
       : 'https://www.gravatar.com/avatar?d=mp&f=y';
   }
 
-  @Expose
+  @Expose()
   get bannerUrl(): string | undefined {
     return this.bannerUrn
       ? `${process.env.APP_URL}/images/${this.bannerUrn}`

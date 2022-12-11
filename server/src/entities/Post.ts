@@ -1,9 +1,12 @@
-import {BaseEntity, BeforeInsert, Column, JoinColumn, ManyToOne, OneToMany} from 'typeorm';
+import {BaseEntity, BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany} from 'typeorm';
 import {User} from './User';
 import Sub from './Sub';
+import Comment from './Comment';
 import {Exclude, Expose} from 'class-transformer';
 import {makeId, slugify} from '../utils/helper';
+import Vote from './Vote';
 
+@Entity("post")
 export default class Post extends BaseEntity {
   @Index()
   @Column()
@@ -25,7 +28,7 @@ export default class Post extends BaseEntity {
   @Column()
   userName: string;
 
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.post)
   @JoinColumn({name: 'userName', referencedColumnName: 'userName'})
   user: User;
 
@@ -34,7 +37,7 @@ export default class Post extends BaseEntity {
   sub: Sub;
 
   @Exclude()
-  @OneToMany(() => Commnet, (comment) => comment.post)
+  @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
   @Exclude()
@@ -42,7 +45,7 @@ export default class Post extends BaseEntity {
   votes: Vote[];
 
   @Expose() get url(): string {
-    return `r/${this.subName}/${this.identifier}/${thisl.slug}`
+    return `r/${this.subName}/${this.identifier}/${this.slug}`
   }
 
   @Expose() get commentCount(): number {
